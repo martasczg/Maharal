@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protected Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input {
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #protectedContent {
+            display: none;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loginForm">
+            <h2>Zadej kód, který jsi vyluštila při hraní hry Golem</h2>
+            <input type="password" id="accessCode" placeholder="Zadej kód">
+            <br>
+            <button onclick="checkCode()">Potvrdit</button>
+            <p id="errorMessage" class="error">Nesprávný kód. Zkus to prosím znovu.</p>
+        </div>
+        
+        <div id="protectedContent">
+            <h2>Welcome to Protected Content</h2>
+            <p>This is your protected content. Replace this text with whatever content you want to show to authorized visitors.</p>
+        </div>
+    </div>
+
+    <script>
+        function checkCode() {
+            const accessCode = document.getElementById('accessCode').value;
+            const correctCode = "1609"; // Changed to the requested code
+            
+            if (accessCode === correctCode) {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('protectedContent').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
