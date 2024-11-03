@@ -68,6 +68,10 @@
         <div id="protectedContent">
             <h2>Gratuluji, oživila jsi Golema</h2>
             <img src="golem.jpg" alt="Golem" class="success-image">
+            <audio id="successSound">
+                <source src="golem-sound.mp3" type="audio/mpeg">
+                Váš prohlížeč nepodporuje přehrávání zvuku.
+            </audio>
         </div>
     </div>
 
@@ -80,6 +84,12 @@
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('protectedContent').style.display = 'block';
                 document.getElementById('errorMessage').style.display = 'none';
+                
+                // Přehrání zvuku
+                const sound = document.getElementById('successSound');
+                sound.play().catch(function(error) {
+                    console.log("Přehrání zvuku se nezdařilo: ", error);
+                });
             } else {
                 document.getElementById('errorMessage').style.display = 'block';
             }
