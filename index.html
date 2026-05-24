@@ -76,11 +76,27 @@
     </div>
 
     <script>
-        function checkCode() {
+        // Pre-computed SHA-256 hash of the correct code "1609"
+        // This is more secure than storing the plaintext password
+        const CORRECT_CODE_HASH = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92";
+        
+        // Function to compute SHA-256 hash using Web Crypto API
+        async function hashMessage(message) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        
+        async function checkCode() {
             const accessCode = document.getElementById('accessCode').value;
-            const correctCode = "1609";
             
-            if (accessCode === correctCode) {
+            // Calculate hash of entered code
+            const inputHash = await hashMessage(accessCode);
+            
+            // Compare with pre-computed hash
+            if (inputHash === CORRECT_CODE_HASH) {
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('protectedContent').style.display = 'block';
                 document.getElementById('errorMessage').style.display = 'none';
